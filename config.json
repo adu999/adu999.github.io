@@ -2,5 +2,6 @@
     "title":"Hello！杜先生",
     "subTitle":"You are what you do everyday",
     "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "GMEEK_VERSION":"last"
+    "GMEEK_VERSION":"last",
+    "singlePage":["about","works"]
 }
