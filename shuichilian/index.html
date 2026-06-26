@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>睡吃练白皮书 V2606 - 思维导图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .sidebar {
+    width: 220px;
+    background: #16213e;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .nav-title {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0 20px 16px;
+    color: #e94560;
+    border-bottom: 1px solid #0f3460;
+    margin-bottom: 6px;
+  }
+  .nav-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    color: #aaa;
+  }
+  .nav-item:hover { background: #0f3460; color: #fff; }
+  .nav-item.active { background: #0f3460; color: #e94560; border-left-color: #e94560; }
+  .nav-num {
+    display: inline-block;
+    width: 22px; height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    background: #0f3460;
+    font-size: 11px;
+    margin-right: 8px;
+    font-weight: 700;
+  }
+  .nav-item.active .nav-num { background: #e94560; color: #fff; }
+  .main {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .mindmap {
+    width: 100%;
+    max-width: 900px;
+  }
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .root-node {
+    font-size: 24px;
+    font-weight: 800;
+    color: #e94560;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #0f3460;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .root-node .icon { font-size: 30px; }
+  .tree {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .level1 {
+    background: #16213e;
+    border-radius: 10px;
+    padding: 16px 20px;
+    border-left: 4px solid #e94560;
+  }
+  .level1-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e94560;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .level2-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 16px;
+  }
+  .level2 {
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .level2-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f5c518;
+    margin-bottom: 6px;
+  }
+  .level3-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .level3 {
+    background: #1a1a2e;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .level3.highlight {
+    background: #e94560;
+    color: #fff;
+    font-weight: 600;
+  }
+  .legend {
+    margin-top: 30px;
+    padding: 16px 20px;
+    background: #16213e;
+    border-radius: 10px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #999;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="nav-title">睡吃练白皮书 V2606</div>
+  <div class="nav-item active" data-section="0">
+    <span class="nav-num">0</span>总览
+  </div>
+  <div class="nav-item" data-section="1">
+    <span class="nav-num">1</span>睡觉 · 头等大事
+  </div>
+  <div class="nav-item" data-section="2">
+    <span class="nav-num">2</span>吃饭 · 5211+168
+  </div>
+  <div class="nav-item" data-section="3">
+    <span class="nav-num">3</span>跑步 · 小提高长鼻
+  </div>
+  <div class="nav-item" data-section="4">
+    <span class="nav-num">4</span>撸铁 · 推拉卷蹲波休
+  </div>
+</div>
+
+<div class="main">
+  <div class="mindmap">
+
+    <!-- 总览 -->
+    <div class="section active" data-section="0">
+      <div class="root-node"><span class="icon">🧬</span>睡吃练白皮书 · 四大体系</div>
+      <div class="tree">
+        <div class="level1">
+          <div class="level1-title">😴 睡觉 · 头等大事</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">核心口诀：黑静凉书十</div>
+              <div class="level3-list">
+                <div class="level3 highlight">黑</div><div class="level3">绝对黑暗</div>
+                <div class="level3 highlight">静</div><div class="level3">提前安静</div>
+                <div class="level3 highlight">凉</div><div class="level3">18-22°C</div>
+                <div class="level3 highlight">书</div><div class="level3">放下手机看书</div>
+                <div class="level3 highlight">十</div><div class="level3">10点前睡觉</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">入睡方法</div>
+              <div class="level3-list">
+                <div class="level3">褪黑素（偶用）</div>
+                <div class="level3">478呼吸法</div>
+                <div class="level3">美军快速入睡</div>
+                <div class="level3">冥想呼吸训练</div>
+                <div class="level3">白噪音</div>
+                <div class="level3">华为手环监测</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">🍽️ 吃饭 · 第二重要</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">核心口诀：5211 + 168</div>
+              <div class="level3-list">
+                <div class="level3 highlight">5</div><div class="level3">每天五瓶水 2.5L+</div>
+                <div class="level3 highlight">2</div><div class="level3">两拳头蔬菜（五颜六色）</div>
+                <div class="level3 highlight">1</div><div class="level3">一拳头蛋白（鱼肉蛋奶豆）</div>
+                <div class="level3 highlight">1</div><div class="level3">一拳头主食（豆薯瓜荞燕）</div>
+                <div class="level3 highlight">168</div><div class="level3">8h进食 16h断食</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">禁忌法则</div>
+              <div class="level3-list">
+                <div class="level3">戒三白（白米白面白肉）</div>
+                <div class="level3">不喝酒（一级致癌物）</div>
+                <div class="level3">不吃零食/包装袋食品</div>
+                <div class="level3">不吃咸菜腊肉腌制</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">减肥第一原理</div>
+              <div class="level3-list">
+                <div class="level3 highlight">热量缺口</div>
+                <div class="level3">日500大卡</div>
+                <div class="level3">周掉1斤</div>
+                <div class="level3">AI拍照记录热量</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">🏃 跑步 · 有氧运动</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">核心口诀：小提高长鼻</div>
+              <div class="level3-list">
+                <div class="level3 highlight">小</div><div class="level3">小步幅</div>
+                <div class="level3 highlight">提</div><div class="level3">（与高合并）</div>
+                <div class="level3 highlight">高</div><div class="level3">高步频180</div>
+                <div class="level3 highlight">长</div><div class="level3">时长40min+</div>
+                <div class="level3 highlight">鼻</div><div class="level3">鼻吸口呼</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">321训练计划</div>
+              <div class="level3-list">
+                <div class="level3">3天轻松跑</div>
+                <div class="level3">2天力量/间歇跑</div>
+                <div class="level3">1天长距离LSD</div>
+                <div class="level3">1天休息</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">四不原则</div>
+              <div class="level3-list">
+                <div class="level3">不攀比</div>
+                <div class="level3">不勉强</div>
+                <div class="level3">不心急</div>
+                <div class="level3">不偷懒</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">💪 撸铁 · 无氧运动</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">核心口诀：推拉卷蹲波休</div>
+              <div class="level3-list">
+                <div class="level3 highlight">推</div><div class="level3">俯卧撑（跪姿→标准→钻石）</div>
+                <div class="level3 highlight">拉</div><div class="level3">引体向上（从挂单杠开始）</div>
+                <div class="level3 highlight">卷</div><div class="level3">平板支撑/卷腹</div>
+                <div class="level3 highlight">蹲</div><div class="level3">深蹲/靠墙静蹲</div>
+                <div class="level3 highlight">波</div><div class="level3">波比跳（最全能）</div>
+                <div class="level3 highlight">休</div><div class="level3">肌肉在休息时生长</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">无器械路线</div>
+              <div class="level3-list">
+                <div class="level3">囚徒健身六艺十式</div>
+                <div class="level3">街头健身</div>
+                <div class="level3">弹力带</div>
+                <div class="level3">自重训练</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#e94560"></div> 核心口诀</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f5c518"></div> 子分类</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#16213e;border:1px solid #333"></div> 知识要点</div>
+        <div style="margin-left:auto;font-size:12px;color:#666">点击左侧导航查看各板块详情</div>
+      </div>
+    </div>
+
+    <!-- 睡觉 -->
+    <div class="section" data-section="1">
+      <div class="root-node"><span class="icon">😴</span>睡觉 · 头等大事</div>
+      <div class="tree">
+        <div class="level1">
+          <div class="level1-title">理论基础：尹烨 · 黑静凉</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">黑</div>
+              <div class="level3-list">
+                <div class="level3">关灯</div><div class="level3">关手机</div><div class="level3">拉遮光窗帘</div><div class="level3">任何光线影响褪黑素分泌</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">静</div>
+              <div class="level3-list">
+                <div class="level3">提前半小时进入睡眠状态</div><div class="level3">戒短视频</div><div class="level3">戒群聊消息</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">凉</div>
+              <div class="level3-list">
+                <div class="level3">18-22°C 最佳</div><div class="level3">被子盖暖 空气要凉</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">自创扩展：黑静凉书十</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">书</div>
+              <div class="level3-list">
+                <div class="level3">放下手机看书</div><div class="level3">纸质书/墨水屏</div><div class="level3">放松类读物</div><div class="level3">把蓝光赶出卧室</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">十</div>
+              <div class="level3-list">
+                <div class="level3">10点前必须睡觉</div><div class="level3">早上6点自然醒</div><div class="level3">做到一半就能质变</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">睡眠辅助方法（按推荐度排序）</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">层级一 · 基础</div>
+              <div class="level3-list"><div class="level3">褪黑素（偶尔用、不依赖）</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">层级二 · 呼吸法</div>
+              <div class="level3-list">
+                <div class="level3">478呼吸法：吸4s - 憋7s - 呼8s</div>
+                <div class="level3">美军快速入睡法（逐块放松）</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">层级三 · 习惯养成</div>
+              <div class="level3-list">
+                <div class="level3">冥想呼吸训练</div>
+                <div class="level3">白噪音（雨声/海浪）</div>
+                <div class="level3">华为手环监测深度睡眠</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 吃饭 -->
+    <div class="section" data-section="2">
+      <div class="root-node"><span class="icon">🍽️</span>吃饭 · 5211 + 168</div>
+      <div class="tree">
+        <div class="level1">
+          <div class="level1-title">5 · 每天五瓶水</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">量化标准</div>
+              <div class="level3-list">
+                <div class="level3">每瓶≥550ml</div><div class="level3">小瓶380ml×5≈2L</div><div class="level3">底线2.5L/天</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">心态方法（老罗·养青龙）</div>
+              <div class="level3-list">
+                <div class="level3">给细胞浇水</div><div class="level3">尿喝白了=喝够</div><div class="level3">随身保温杯</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">211 · 每餐顺序与结构</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">吃饭顺序（不能乱）</div>
+              <div class="level3-list">
+                <div class="level3 highlight">先</div><div class="level3">两拳头蔬菜 → 纤维减缓碳水吸收</div>
+                <div class="level3 highlight">再</div><div class="level3">一拳头高蛋白</div>
+                <div class="level3 highlight">最后</div><div class="level3">一拳头主食</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">蔬菜：五颜六色</div>
+              <div class="level3-list"><div class="level3">绿/红/白 种类越丰富越好</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">蛋白质：鱼肉蛋奶豆</div>
+              <div class="level3-list"><div class="level3">五种轮流来</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">主食：豆薯瓜荞燕</div>
+              <div class="level3-list"><div class="level3">土豆/红薯/南瓜/荞麦面/燕麦粥</div><div class="level3">全谷物根茎类 替代精米白面</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">餐前细节</div>
+              <div class="level3-list"><div class="level3">先喝一小口醋 平稳血糖</div><div class="level3">分餐盘控制量</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">168 · 轻断食</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">规则</div>
+              <div class="level3-list">
+                <div class="level3">8小时内进食（如8:00-16:00）</div>
+                <div class="level3">16小时断食状态</div>
+                <div class="level3">月≥15天即可</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">原理</div>
+              <div class="level3-list">
+                <div class="level3">触发细胞自噬反应</div>
+                <div class="level3">身体自己打扫坏掉的部分</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">进阶</div>
+              <div class="level3-list"><div class="level3">每季度1-2天完整断食</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">禁忌法则</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">戒三白</div>
+              <div class="level3-list"><div class="level3">白米/白面/白肉（肥肉）</div><div class="level3">精加工食品</div><div class="level3">零食/包装袋食品</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">不喝酒</div>
+              <div class="level3-list"><div class="level3">WHO一级致癌物</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">不吃腌制</div>
+              <div class="level3-list"><div class="level3">咸菜/腊肉/腌制品</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">减肥第一原理 = 热量缺口</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">日500大卡 → 周1斤 → 月2kg</div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">管住嘴 » 迈开腿</div>
+              <div class="level3-list"><div class="level3">1个肉夹馍 = 慢跑半小时</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">辅助</div>
+              <div class="level3-list"><div class="level3">多喝水提代谢</div><div class="level3">早睡觉燃脂</div><div class="level3">AI拍照记录</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 跑步 -->
+    <div class="section" data-section="3">
+      <div class="root-node"><span class="icon">🏃</span>跑步 · 有氧运动</div>
+      <div class="tree">
+        <div class="level1">
+          <div class="level1-title">核心口诀：小提高长鼻</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">小 · 小步幅</div>
+              <div class="level3-list"><div class="level3">不迈大步 保护膝盖</div><div class="level3">超慢跑的核心 = 小碎步</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">高 · 高步频</div>
+              <div class="level3-list"><div class="level3">每分钟180步左右</div><div class="level3">"小步快倒腾"</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">长 · 时长40min+</div>
+              <div class="level3-list"><div class="level3">前20min烧糖原</div><div class="level3">40min后大量燃脂</div><div class="level3">循序渐进</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">鼻 · 鼻子呼吸</div>
+              <div class="level3-list"><div class="level3">鼻吸口呼（最低要求）</div><div class="level3">日本细胞分裂训练法</div><div class="level3">控制强度 不外跑崩</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">燃脂心率</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">180 - 年龄 ≈ 燃脂最佳心率</div>
+              <div class="level3-list"><div class="level3">例：35岁 → 145左右</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">321训练计划（石春建）</div>
+          <div class="level2-list">
+            <div class="level2"><div class="level2-title">3天 · 轻松跑</div></div>
+            <div class="level2"><div class="level2-title">2天 · 力量训练 / 间歇跑</div></div>
+            <div class="level2"><div class="level2-title">1天 · 长距离LSD ≥1h</div></div>
+            <div class="level2"><div class="level2-title">1天 · 完全休息</div></div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">四不原则 · 心态修炼</div>
+          <div class="level2-list">
+            <div class="level2"><div class="level2-title">不攀比</div><div class="level3-list"><div class="level3">不跟别人比配速跑量</div></div></div>
+            <div class="level2"><div class="level2-title">不勉强</div><div class="level3-list"><div class="level3">身体说不就停 留余地</div></div></div>
+            <div class="level2"><div class="level2-title">不心急</div><div class="level3-list"><div class="level3">龟速没关系 姿势丑也正常</div></div></div>
+            <div class="level2"><div class="level2-title">不偷懒</div><div class="level3-list"><div class="level3">今天不想跑 所以才必须跑</div></div></div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">必做的两件事</div>
+          <div class="level2-list">
+            <div class="level2"><div class="level2-title">跑前热身</div><div class="level3-list"><div class="level3">不热身 膝盖迟早还债</div></div></div>
+            <div class="level2"><div class="level2-title">跑后拉伸</div><div class="level3-list"><div class="level3">跑步 = 热身 + 跑 + 拉伸（完整流程）</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 撸铁 -->
+    <div class="section" data-section="4">
+      <div class="root-node"><span class="icon">💪</span>撸铁 · 无氧运动</div>
+      <div class="tree">
+        <div class="level1">
+          <div class="level1-title">路线：无器械健身</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">理念</div>
+              <div class="level3-list">
+                <div class="level3">不去健身房也可以</div>
+                <div class="level3">囚徒健身 / 街头健身</div>
+                <div class="level3">弹力带 / 自重训练</div>
+              </div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">为什么重要</div>
+              <div class="level3-list"><div class="level3">肌肉量 = 长寿指标</div><div class="level3">提高基础代谢</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">核心口诀：推拉卷蹲波休</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">推 · 俯卧撑</div>
+              <div class="level3-list"><div class="level3">跪姿→标准→钻石→倾斜</div><div class="level3">一辈子都能做</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">拉 · 引体向上</div>
+              <div class="level3-list"><div class="level3">新手从挂单杠开始</div><div class="level3">10s→30s→1min</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">卷 · 核心</div>
+              <div class="level3-list"><div class="level3">平板支撑（办公室可做）</div><div class="level3">卷腹（进阶）</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">蹲 · 深蹲</div>
+              <div class="level3-list"><div class="level3">自重深蹲</div><div class="level3">靠墙静蹲（护膝 办公室）</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">波 · 波比跳</div>
+              <div class="level3-list"><div class="level3">最全能动作 一练全身</div><div class="level3">温和版：不用跳的波比</div></div>
+            </div>
+            <div class="level2">
+              <div class="level2-title">休 · 休息</div>
+              <div class="level3-list"><div class="level3">肌肉在休息时生长</div><div class="level3">天天练 = 退步</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">参考体系</div>
+          <div class="level2-list">
+            <div class="level2"><div class="level2-title">囚徒健身六艺十式</div></div>
+            <div class="level2"><div class="level2-title">HIIT / HYROX / CrossFit / 斯巴达</div></div>
+            <div class="level2"><div class="level2-title">Kitchen Counter Daily 50</div></div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">柔韧性</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">筋长一寸 多活一年</div>
+              <div class="level3-list"><div class="level3">拉伸 / 瑜伽 / 普拉提</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="level1">
+          <div class="level1-title">运动总诀</div>
+          <div class="level2-list">
+            <div class="level2">
+              <div class="level2-title">提高心率 + 增加肌肉 + 保持时长</div>
+              <div class="level3-list"><div class="level3">出汗 呼吸加速 40min+</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelector('.section[data-section="' + item.dataset.section + '"]').classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
